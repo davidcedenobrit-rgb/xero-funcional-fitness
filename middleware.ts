@@ -9,7 +9,9 @@ export async function middleware(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        getAll() { return request.cookies.getAll() },
+        getAll() {
+          return request.cookies.getAll()
+        },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
           supabaseResponse = NextResponse.next({ request })
@@ -24,13 +26,14 @@ export async function middleware(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   const { pathname } = request.nextUrl
 
-  // Si no hay sesión y no está en login → redirigir a login
-  if (!user && !pathname.startsWith('/login')) {
+  const publicRoutes = ['/login', '/registro']
+  const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route))
+
+  if (!user && !isPublicRoute) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
-  // Si hay sesión y está en login → redirigir al dashboard
-  if (user && pathname === '/login') {
+  if (user && isPublicRoute) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
