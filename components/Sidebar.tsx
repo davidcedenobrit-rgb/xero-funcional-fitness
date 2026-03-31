@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import {
   LayoutDashboard, Users, CreditCard, Layers, DollarSign,
-  TrendingDown, ClipboardCheck, Settings, LogOut, X
+  TrendingDown, ClipboardCheck, Settings, LogOut, X, ClipboardList
 } from 'lucide-react'
 import clsx from 'clsx'
 
@@ -17,6 +17,7 @@ const navItems = [
   { href: '/caja',          label: 'Caja',           icon: DollarSign },
   { href: '/gastos',        label: 'Gastos',         icon: TrendingDown },
   { href: '/asistencia',    label: 'Asistencia',     icon: ClipboardCheck },
+  { href: '/inscripciones', label: 'Inscripciones',  icon: ClipboardList },
   { href: '/configuracion', label: 'Configuración',  icon: Settings },
 ]
 
